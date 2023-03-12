@@ -101,7 +101,7 @@ app.include_router(vote.router)
 #async def root(): 
 #function below root is an arbitrary name, we have to have a function as descriptive as possible
 def root():
-    return {"message": "welcome to my api!!!"}
+    return {"message": "welcome to my api 12345!!!"}
 
 
 ###########################
@@ -196,4 +196,18 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 # then ran git push -u origin main
 # then we authenticated it worked and we verify that our code was now successfully hosted on Github
 
-#SKIPPED THE WHO PART ON HEROKU because apparently it is not free anymore. 
+# exploring HEROKU as a web platform and apparently it is not free anymore. 
+# created an account and dowloaded windows version here:https://devcenter.heroku.com/articles/getting-started-with-python#set-up
+# then had to restart all terminals and ran: heroku --version
+# then after it spit out a version number we ran: heroku login 
+# then just press enter and login using web browser
+# then going back to the tutorial. No need to worry about the app because we already have an app
+# we ran: heroku create --help
+# then we ran the same command with the app name (keep in mind that app name is global so unique): heroku create fastapi-sabydage
+# had to add a credit card first 
+# then we ran: git remote
+# we see that hekoru and origin has been added. so instead of running git push origin main, we'll use:git push heroku main 
+# the command above will take some time
+# then gave us the url name: https://fastapi-sabydage.herokuapp.com/
+# then an error appear on the page and the teacher says it's normal because there needs to be a few things changed before it works.
+# the app does not know it has to start. It does know it's an API. so we have to create a file that tells heroku what steps are needed. Procfile created and mentioned in the heroku tutorial
