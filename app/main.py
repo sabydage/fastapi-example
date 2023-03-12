@@ -101,7 +101,7 @@ app.include_router(vote.router)
 #async def root(): 
 #function below root is an arbitrary name, we have to have a function as descriptive as possible
 def root():
-    return {"message": "welcome to my api 12345!!!"}
+    return {"message": "welcome to my api 123456789!!!"}
 
 
 ###########################
@@ -211,3 +211,47 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 # then gave us the url name: https://fastapi-sabydage.herokuapp.com/
 # then an error appear on the page and the teacher says it's normal because there needs to be a few things changed before it works.
 # the app does not know it has to start. It does know it's an API. so we have to create a file that tells heroku what steps are needed. Procfile created and mentioned in the heroku tutorial
+# we pushed the new files to Git hub and then to Heroku using the following commands
+# git add --all
+# git commit -m "added procfile"
+# git push origin main
+# git push heroku main
+# then the application still does not work, but the teacher know what is wrong 
+# anytime the application is not working, heroku has an easy of access logs with the following command: heroku logs -t
+# based on the error messages, we see Settings and errors regarding username and password because we did not check in our .env file.
+# so we need to add those environment variables through the command line or the dashboard. Before we can do that, we need to set up a postgres database
+# heroku provides us with a free postgres instance : https://devcenter.heroku.com/articles/provisioning-heroku-postgres
+# then run the following command: heroku addons:create heroku-postgresql:mini --help
+# then teacher says we do not need to provide any additional flag so just run this command: heroku addons:create heroku-postgresql:mini
+# then back in our Heroku account, we can click on the database and open up settings, view credentials we now see the Host and Database names. Copy this information.
+# then go back into main application still on Heroku account. Go into Settings and see the Config Vars. It is where we provide our environment variables to our instance. Heroku calls our instance "dynos"
+# right now if you view the config vars, there should only be one "Database_URL"
+# the teacher will want to take the environment variable "Database_URL" and break it into smaller components. Basically, we added all variables contained in our .env file
+# now we restart our heroku instance using the following command: heroku ps:restart
+# then running: heroku logs -t
+# if ever you forget the url of your app, you can run this command to get it back: heroku apps:info fastapi-sabydage
+# so this works https://fastapi-sabydage.herokuapp.com/
+# let's go to our documentation https://fastapi-sabydage.herokuapp.com/docs
+# when testing our API and trying to create a user, we get an internal server error
+# go back to our logs to check
+# teacher says it has to go with our postgres 
+# the teacher made us open pgadmin and we register a new server. We selected our name custom and then in the connection tab we used the same parameters as the credentials on Heroku
+# then he made us expand databases and there are a ton of databases! can only access your own. You have to search for it manually.
+# when you open SChemas/Public/tables, we see that there are no tables. So this is the main reason why our application is not working. This is where alembic is going to come into play
+# we ARE GOIN TO RUN this command: alembic upgrade head
+# it is important to understand that we NEVER run alembic revision on our PRODUCTION server. we only do that on a DEVELOPMENT SERVER and then we push out our code.
+# the teacher now says how are we going to run this command on our production server.
+# the teacher refers to this documentation to do that: https://devcenter.heroku.com/articles/getting-started-with-python#start-a-console
+# now we run: heroku run "alembic upgrade head"
+# then the teacher wants to restart our application just in case we crashed it beforehand: heroku ps:restart
+# now go back to docs and try it out. We see that we can successfully created a new user and it appears in pgadmin
+# last thing the teacher wants to show us is our to push out changes to our application
+# first push out the changes to git hub repository: 
+# git add --all
+# git commit -m "changing the world"
+# git push origin main
+# then finally push to our production environment
+# git push heroku main
+# so that is pushed out now.
+# keep in mind that this is the steps you have to do when you change your code, but if you change alembic, same changes but on top of that, we have to do the 
+#  heroku run alembic upgrade head so that we push the changes to postgres instance.
